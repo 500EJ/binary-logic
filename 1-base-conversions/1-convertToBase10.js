@@ -3,7 +3,13 @@
 /******************************************************************************/
 
 const convertToBase10 = str => {
-  // Your code here
+  let sum = 0;
+  const hexConversions = { a: 10, b: 11, c: 12, d: 13, e: 14, f: 15 };
+  for (let i = str.length - 1; i >= 2; i--) {
+    const number = hexConversions[str[i]] || Number(str[i]);
+    sum += Math.pow(str.startsWith("0b") ? 2 : 16, str.length - 1 - i) * number;
+  }
+  return sum;
 };
 
 /******************************************************************************/
