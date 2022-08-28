@@ -2,8 +2,26 @@
 
 /******************************************************************************/
 
+const convertToBase10 = str => {
+  let sum = 0;
+  const hexConversions = { a: 10, b: 11, c: 12, d: 13, e: 14, f: 15 };
+  for (let i = str.length - 1; i >= 2; i--) {
+    const number = hexConversions[str[i]] || Number(str[i]);
+    sum += Math.pow(str.startsWith("0b") ? 2 : 16, str.length - 1 - i) * number;
+  }
+  return sum;
+};
+
 const convertToBase16 = element => {
-  // Your code here
+  if (typeof element !== "number") element = convertToBase10(element);
+  const hex = Array(Math.floor(Math.log10(element) / Math.log10(16)) + 1);
+  const conversions = { 10: "a", 11: "b", 12: "c", 13: "d", 14: "e", 15: "f" };
+  for (let i = 0; i < hex.length; i++) {
+    const value = Math.floor(element / Math.pow(16, hex.length - 1 - i));
+    element -= value * Math.pow(16, hex.length - 1 - i);
+    hex[i] = String(value).length > 1 ? conversions[value] : value;
+  }
+  return "0x" + hex.join("");
 };
 
 /******************************************************************************/
