@@ -21,8 +21,29 @@ const binaryStringToArray = str => {
   return binary8bitStr.split(",");
 };
 
+const convertToBase10 = str => {
+  let sum = 0;
+  for (let i = 0; i < str.length; i++) {
+    sum += Math.pow(2, str.length - i - 1) * Number(str[i]);
+  }
+  return sum;
+};
+
 const binaryToAscii = str => {
-  // Your code here
+  const alpha = "abcdefghijklmnopqrstuvwxyz";
+  const punctuation = " !\"#$%&'()*+,-./";
+  const binary = binaryStringToArray(str).map(n => convertToBase10(n));
+  let ascii = "";
+  binary.forEach(n => {
+    if (n >= 65 && n <= 90) {
+      ascii += alpha[n - 65].toUpperCase();
+    } else if (n >= 97 && n <= 122) {
+      ascii += alpha[n - 97];
+    } else {
+      ascii += punctuation[n - 32];
+    }
+  });
+  return ascii;
 };
 
 /******************************************************************************/
